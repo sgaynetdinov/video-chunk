@@ -40,8 +40,10 @@ func workerScheduler(url, folder string) {
 					url := <-urlCh
 					err := RetryWorker(5, url, folder)
 					if err != nil {
+						if err != ErrNotFound {
+							fmt.Println("Error")
+						}
 						finishCh <- true
-						fmt.Println("Error")
 						return
 					}
 					fmt.Print(".")
