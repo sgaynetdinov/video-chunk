@@ -9,18 +9,20 @@ import (
 )
 
 var (
+	client          *yandexdisk.Client
 	workerCount     = flag.Int("w", 10, "worker count")
 	configFile      = flag.String("c", "", "config file")
 	yandexdiskToken = flag.String("token", "", "yandex disk token")
 )
 
-var client = yandexdisk.NewClient(*yandexdiskToken)
-
 func workerScheduler(url, folder string) {
 	fmt.Printf("\n\nStart download: %s\n", folder)
 	var wg sync.WaitGroup
 
-	client.CreateFolder(folder)
+	err := client.CreateFolder(folder)
+	if err != nil {
+		panic(err)
+	}
 
 	finishCh := make(chan bool)
 	urlCh := generateUrl(url, 0)
@@ -36,9 +38,10 @@ func workerScheduler(url, folder string) {
 					return
 				default:
 					url := <-urlCh
-					err := Worker(url, folder)
+					err := RetryWorker(5, url, folder)
 					if err != nil {
 						finishCh <- true
+						fmt.Println("Error")
 						return
 					}
 					fmt.Print(".")
@@ -59,6 +62,8 @@ func workerScheduler(url, folder string) {
 
 func main() {
 	flag.Parse()
+
+	client = yandexdisk.NewClient(*yandexdiskToken)
 
 	videoItems, err := parseConfig(*configFile)
 	if err != nil {

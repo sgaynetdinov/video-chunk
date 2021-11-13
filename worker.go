@@ -25,3 +25,15 @@ func Worker(url, folder string) error {
 
 	return nil
 }
+
+func RetryWorker(retryNumber int, url, folder string) (err error) {
+	for i := retryNumber; i > 0; i-- {
+		err = Worker(url, folder)
+		if err != nil {
+			continue
+		}
+		return nil
+	}
+
+	return err
+}
