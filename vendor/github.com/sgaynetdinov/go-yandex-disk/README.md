@@ -7,6 +7,11 @@
 
 `go get -u github.com/sgaynetdinov/go-yandex-disk`
 
+
+## Test
+
+`go test ./...`
+
 ## Token
 
 [https://yandex.ru/dev/disk/api/concepts/quickstart-docpage/](https://yandex.ru/dev/disk/api/concepts/quickstart-docpage/)
@@ -23,5 +28,5 @@ func main() {
 }
 ```
 
-## Documentation
-- API Yandex.Disk: https://yandex.ru/dev/disk/api/concepts/about-docpage/
+## Yandex.Disk API
+- https://yandex.ru/dev/disk/api/concepts/about-docpage/

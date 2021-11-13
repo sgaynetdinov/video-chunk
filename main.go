@@ -16,10 +16,9 @@ var (
 )
 
 func workerScheduler(url, folder string) {
-	fmt.Printf("\n\nStart download: %s\n", folder)
 	var wg sync.WaitGroup
 
-	err := client.CreateFolder(folder)
+	err := client.MkdirAll(folder)
 	if err != nil {
 		panic(err)
 	}
@@ -76,6 +75,7 @@ func main() {
 	fmt.Printf("Video count: %d\n", len(videoItems))
 
 	for _, video := range videoItems {
+		fmt.Printf("\n\nStart download: %s\n", folder)
 		workerScheduler(video.Url, video.Folder)
 	}
 }

@@ -10,8 +10,9 @@ type Resource struct {
 	Name     string `json:"name"`
 	Created  string `json:"created"`
 	Modified string `json:"modified"`
-	Md5      string `json:"md5,omitetype"`
-	Sha256   string `json:"sha256,omitetype"`
+	Md5      string `json:"md5,omitempty"`
+	Sha256   string `json:"sha256,omitempty"`
+	Size     int64  `json:"size,omitempty"`
 }
 
 func (client *Client) Stat(path string) (resource *Resource, err error) {
