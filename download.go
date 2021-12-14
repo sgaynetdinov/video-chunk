@@ -30,7 +30,7 @@ func download(url string, body *[]byte) error {
 }
 
 // Example:
-// zeroStrings(3, 10) -> 0007
+// zeroStrings(3, 7) -> 0007
 // zeroStrings(5, 10) -> 000010
 func zeroStrings(length int, number int) string {
 	numberString := strconv.Itoa(number)
